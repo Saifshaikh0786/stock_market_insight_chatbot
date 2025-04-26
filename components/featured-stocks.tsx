@@ -79,7 +79,7 @@ export function FeaturedStocks() {
           </Tabs>
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-2 max-h-[calc(100vh-300px)] overflow-y-auto pr-1 custom-scrollbar">
           {stockCategories[category].map((stock) => (
             <motion.div
               key={stock.symbol}
@@ -88,22 +88,22 @@ export function FeaturedStocks() {
               onHoverEnd={() => setHoveredStock(null)}
               whileHover={{ scale: 1.01 }}
             >
-              <div className="flex items-center gap-3">
-                <div className="flex h-8 w-8 items-center justify-center rounded-md bg-slate-800 font-bold text-sm">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-md bg-slate-800 font-bold text-sm">
                   {stock.symbol.substring(0, 2)}
                 </div>
-                <div>
-                  <div className="font-medium">{stock.symbol}</div>
-                  <div className="text-xs text-slate-400">{stock.name}</div>
+                <div className="min-w-0 overflow-hidden">
+                  <div className="font-medium truncate">{stock.symbol}</div>
+                  <div className="text-xs text-slate-400 truncate">{stock.name}</div>
                 </div>
               </div>
 
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2 flex-shrink-0">
                 {hoveredStock === stock.symbol && (
                   <motion.div
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    className="text-xs text-slate-400 flex gap-2"
+                    className="text-xs text-slate-400 hidden sm:flex gap-2"
                   >
                     <span>Vol: {stock.volume}</span>
                     <span>Cap: {stock.marketCap}</span>

@@ -28,6 +28,7 @@ import { MessageFormatter } from "@/components/message-formatter"
 import { UserProfile } from "@/components/user-profile"
 import { FeaturedStocks } from "@/components/featured-stocks"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { BackgroundCandles } from "@/components/background-candles"
 
 type Message = {
   id: string
@@ -155,7 +156,10 @@ export default function ChatPage() {
   }
 
   return (
-    <div className="flex flex-col h-screen bg-gradient-to-b from-slate-950 to-slate-900 text-white">
+    <div className="flex flex-col h-screen bg-gradient-to-b from-slate-950 to-slate-900 text-white relative">
+      {/* Background Candles */}
+      <BackgroundCandles />
+
       <header className="border-b border-slate-800 bg-slate-900/80 backdrop-blur-sm p-4 sticky top-0 z-10">
         <div className="container mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -181,7 +185,7 @@ export default function ChatPage() {
         </div>
       </header>
 
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1 overflow-hidden relative z-10">
         <main className="flex-1 overflow-y-auto p-4 container mx-auto max-w-5xl">
           <div className="space-y-6 py-4">
             <AnimatePresence initial={false}>
@@ -280,9 +284,9 @@ export default function ChatPage() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 300 }}
               transition={{ duration: 0.3 }}
-              className="w-80 border-l border-slate-800 bg-slate-900/30 backdrop-blur-sm p-4 overflow-y-auto hidden lg:block"
+              className="w-80 border-l border-slate-800 bg-slate-900/70 backdrop-blur-sm p-4 overflow-hidden hidden lg:flex flex-col"
             >
-              <div className="space-y-6">
+              <div className="space-y-6 overflow-y-auto custom-scrollbar pr-1 flex-1">
                 <FeaturedStocks />
 
                 <div className="space-y-3">
@@ -298,7 +302,7 @@ export default function ChatPage() {
                         className="w-full justify-start text-left h-auto py-2 border-slate-800 bg-slate-800/50 hover:bg-slate-800"
                         onClick={() => handleSuggestedQuestion(question)}
                       >
-                        {question}
+                        <span className="truncate">{question}</span>
                       </Button>
                     ))}
                   </div>
@@ -360,7 +364,7 @@ export default function ChatPage() {
         </div>
       </div>
 
-      <footer className="border-t border-slate-800 bg-slate-900/80 backdrop-blur-sm p-4 sticky bottom-0">
+      <footer className="border-t border-slate-800 bg-slate-900/80 backdrop-blur-sm p-4 sticky bottom-0 z-10">
         <div className="container mx-auto max-w-5xl">
           <form onSubmit={handleSubmit} className="flex gap-2">
             <Input
